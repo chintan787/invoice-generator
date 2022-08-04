@@ -45,10 +45,14 @@ kendo-pdf-document .item_price{
   display: inline-flex;
 }
 
- /*  kendo-pdf-document .invoice,
-kendo-pdf-document .company-name{
-margin-right: 1px;
-} */  
+kendo-pdf-document .company-details textarea{
+  text-align: right;
+  justify-content: right;
+  display: flex;
+  margin-left: auto;
+  /* color:blue; */
+
+}
 
  table{
   border-collapse:collapse;
