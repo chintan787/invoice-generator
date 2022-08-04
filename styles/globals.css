@@ -1,0 +1,103 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: 'Inter', sans-serif;
+}
+html{
+    font-family: 'Inter', sans-serif;
+}
+
+/* @layer base {
+    html {
+      font-family: Inter, sans-serif;
+    }
+  } */
+
+  /* kendo-pdf-document .company-details textarea{ */
+   /*   text-align: right;
+    justify-content: right;
+    display: flex;
+    margin-left: auto; 
+    color:blue; */
+
+/* } */
+
+kendo-pdf-document .edit-button,
+kendo-pdf-document .delete-button,
+kendo-pdf-document .add-button{
+  display:none;
+}
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type=number] {
+  -moz-appearance: textfield;
+}
+kendo-pdf-document .item_price{
+  margin-left: -2px;
+}
+
+ kendo-pdf-document .prefix{
+  display: inline-flex;
+}
+
+ /*  kendo-pdf-document .invoice,
+kendo-pdf-document .company-name{
+margin-right: 1px;
+} */  
+
+ table{
+  border-collapse:collapse;
+}
+kendo-pdf-document tr ,kendo-pdf-document tr td,
+kendo-pdf-document tr th{
+  
+  page-break-inside: avoid !important;
+}
+table tr, table tr th,
+table tr d{
+  page-break-inside: avoid !important;
+}
+
+/*  kendo-pdf-document #txtarea{
+  width:75%;
+  margin-left: auto;
+} 
+ */
+
+ kendo-pdf-document .address{
+margin-right: -12px;
+ }
+
+ kendo-pdf-document .mobile-number{
+  margin-left: 8px;
+}
+
+/* kendo-pdf-document .item_name{
+  page-break-inside: avoid !important;
+  width:"100%";
+}
+kendo-pdf-document .item_desc{
+  page-break-inside: avoid !important;
+  width:345.85px !important;
+} 
+ */
+
+.signatureCanvas{
+border:1px solid;
+margin:0 auto;
+}
+#mytbody tr:first-child td{
+  margin:15px 0; 
+}
+
+.rmdp-container input{
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 500;
+  color:#404a51;
+}

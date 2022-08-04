@@ -1,0 +1,8 @@
+kendo-pdf-document .company-details textarea{
+    text-align: right;
+    justify-content: right;
+    display: flex;
+    margin-left: auto;
+    /* color:blue; */
+
+}
