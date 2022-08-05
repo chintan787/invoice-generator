@@ -8,12 +8,6 @@ import { format } from 'date-fns'
 
 export default function InvoiceFromSection() {
 
-  
-  
-  const [dates, setDates] = useState([])
-  const [allDates, setAllDates] = useState([])
-
-  const [trimURL, setTrim] = useState(null)
   const [isdownloadbtnClick, setDownloadbtnClick] = useState(false);
   const [currencyType, setCurrencyType] = useState("$");
   const [images, setImages]: any = useState("/stroke-infotech-logo.svg");
@@ -96,27 +90,8 @@ export default function InvoiceFromSection() {
   }
 
 
-  /* 
-  trim = () => {
-    this.setState({trimmedDataURL: this.sigPad.getTrimmedCanvas()
-      .toDataURL('image/png')})
-  }
- */
-
-
-
   const handleTableData = (event: any, row: any, index: any) => {
-    /* if (event.target.name === "dates") {
-      console.log("if call");
-      const newData = [...data]
-      setDates(event)
-      setAllDates(getAllDatesInRange(event))
-    }
-    else{ */
-
-
-
-    const { value, name } = event.target;
+  const { value, name } = event.target;
     setFormData([{ ...formData, [name]: value }])
     const updatedData = [...data];
     const item: any = { ...updatedData[index] };
@@ -176,16 +151,6 @@ export default function InvoiceFromSection() {
   }
 
 
-  /* const clearSignature = () => {
-    
-    sigCanvas.current.clear();
-   
-  }
-  const saveSignature = () => {
-    console.log(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
-    setTrim(sigCanvas.current.getTrimmedCanvas().toDataURL("image/png"));
-  } */
-
   // calculate total
   const total = data.map((r) => r.item_amount)
   const sum = total.reduce((accumulator, value) => {
@@ -200,15 +165,10 @@ export default function InvoiceFromSection() {
 
 
   const handleoptions = (e: any) => {
-    console.log("e", e.target.value)
-    //  currencyType = e.target.value
     setCurrencyType(e.target.value)
-    console.log("type", currencyType)
-
   }
-  console.log("type", currencyType)
-  const options = { year: "numeric", month: "numeric", day: "numeric" };
 
+  
 
   return (
     <>

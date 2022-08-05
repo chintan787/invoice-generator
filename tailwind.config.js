@@ -5,6 +5,8 @@ module.exports = {
     textColor: {
       'primary': '#3e484f',
       'secondary': '#404a51',
+      // 'primary': '#28343c',
+      // 'secondary': '#465057',
       'info':'#898e92',
       'danger': '#898e92',
       'button-text':"#fff",
@@ -24,7 +26,7 @@ module.exports = {
       "card": "0px 0px 1px 0px rgb(0 0 0 / 20%), 0px 2px 2px 0px rgb(0 0 0 / 6%), 0px 0px 2px 0px rgb(0 0 0 / 6%)"
     },
     fontSize: {
-      xs: "12px",
+      xs: "14px",
       xl: "36px"
     },
     maxWidth: {
@@ -35,7 +37,7 @@ module.exports = {
       'a4': '297mm'
     },
     top:{
-      '16px':'16px'
+      '5px':'5px'
     },
     right:{
       "-20px":"-20px"

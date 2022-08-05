@@ -105,3 +105,7 @@ margin:0 auto;
   font-weight: 500;
   color:#404a51;
 }
+
+kendo-pdf-document .text-xs{
+font-size: 12px;
+}
