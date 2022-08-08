@@ -12,6 +12,10 @@ module.exports = {
       'button-text':"#fff",
       
     },
+    fill:{
+      'primary': '#3e484f',
+      'secondary': '#404a51',
+    },
     borderColor:{
       'real-gray':'#d8dadb'
     },

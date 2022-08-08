@@ -2,110 +2,164 @@
 @tailwind components;
 @tailwind utilities;
 
-body{
-    font-family: 'Inter', sans-serif;
-}
-html{
-    font-family: 'Inter', sans-serif;
+body {
+  font-family: 'Inter', sans-serif;
 }
 
-/* @layer base {
-    html {
-      font-family: Inter, sans-serif;
-    }
-  } */
+html {
+  font-family: 'Inter', sans-serif;
+}
 
-  /* kendo-pdf-document .company-details textarea{ */
-   /*   text-align: right;
-    justify-content: right;
-    display: flex;
-    margin-left: auto; 
-    color:blue; */
+#curencySymbols {
+  font-family: "CODE2000";
+}
 
-/* } */
 
 kendo-pdf-document .edit-button,
 kendo-pdf-document .delete-button,
-kendo-pdf-document .add-button{
-  display:none;
+kendo-pdf-document .add-button {
+  display: none;
 }
+#mytbody tr:first-child td .delete-button{
+  top:19px;
+}
+
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
+
 input[type=number] {
   -moz-appearance: textfield;
 }
-kendo-pdf-document .item_price{
+
+kendo-pdf-document .item_price {
   margin-left: -2px;
 }
 
- kendo-pdf-document .prefix{
+kendo-pdf-document .prefix {
   display: inline-flex;
 }
 
-kendo-pdf-document .company-details textarea{
+kendo-pdf-document .company-details textarea {
   text-align: right;
   justify-content: right;
   display: flex;
   margin-left: auto;
-  /* color:blue; */
+ 
 
 }
 
- table{
-  border-collapse:collapse;
+table {
+  border-collapse: collapse;
 }
-kendo-pdf-document tr ,kendo-pdf-document tr td,
-kendo-pdf-document tr th{
-  
+
+kendo-pdf-document tr, kendo-pdf-document tr td,
+kendo-pdf-document tr th {
+
   page-break-inside: avoid !important;
 }
+
 table tr, table tr th,
-table tr d{
+table tr d {
   page-break-inside: avoid !important;
 }
 
-/*  kendo-pdf-document #txtarea{
-  width:75%;
-  margin-left: auto;
-} 
- */
 
- kendo-pdf-document .address{
-margin-right: -12px;
- }
+kendo-pdf-document .address {
+  margin-right: -12px;
+}
 
- kendo-pdf-document .mobile-number{
+kendo-pdf-document .mobile-number {
   margin-left: 8px;
 }
 
-/* kendo-pdf-document .item_name{
-  page-break-inside: avoid !important;
-  width:"100%";
-}
-kendo-pdf-document .item_desc{
-  page-break-inside: avoid !important;
-  width:345.85px !important;
-} 
- */
 
-.signatureCanvas{
-border:1px solid;
-margin:0 auto;
-}
-#mytbody tr:first-child td{
-  margin:15px 0; 
+.signatureCanvas {
+  border: 1px solid;
+  margin: 0 auto;
 }
 
-.rmdp-container input{
+
+.rmdp-container input {
   font-size: 12px;
   line-height: 16px;
   font-weight: 500;
-  color:#404a51;
+  color: #404a51;
 }
 
-kendo-pdf-document .text-xs{
-font-size: 12px;
+kendo-pdf-document .text-xs {
+  font-size: 12px;
+}
+
+table .rdrCalendarWrapper {
+  color: #3e484f;
+}
+
+input:focus,
+textarea:focus {
+  outline-style: solid;
+  outline-color: #d8dadb;
+ 
+}
+
+select:focus {
+  outline-color: #d8dadb;
+  border:none;
+  
+}
+input,
+textarea{
+  padding: 4px 4px;
+}
+kendo-pdf-document input,
+kendo-pdf-document textarea{
+  padding:0;
+}
+
+#invoice-details tr td input{
+  padding: 4px 4px;
+}
+#invoice-details tr td span{
+  align-items: center;
+}
+kendo-pdf-document #invoice-details tr td input{
+  padding: 0px;
+}
+kendo-pdf-document .client_name{
+margin-bottom: 0;
+}
+
+
+
+ kendo-pdf-document .calender-icon {
+display: none;
+} 
+#mytbody tr:first-child .calender-icon{
+top:21px;
+}
+
+#mythead tr th{
+  padding: 8px 0;
+}
+#mytbody tr td{
+  padding-bottom: 14px;
+}
+
+#mytbody tr:first-child td{
+  padding-top: 14px;
+}
+
+/* #mytbody tr.add-item td{
+  padding: 0;
+} */
+kendo-pdf-document #mytbody tr.add-item td{
+  padding-bottom: 2px;
+}
+kendo-pdf-document #mytbody tr td{
+  padding-bottom: 10px;
+}
+kendo-pdf-document #mytbody tr:first-child td{
+  padding-top: 10px;
 }
