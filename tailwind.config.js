@@ -5,8 +5,6 @@ module.exports = {
     textColor: {
       'primary': '#3e484f',
       'secondary': '#404a51',
-      // 'primary': '#28343c',
-      // 'secondary': '#465057',
       'info':'#898e92',
       'danger': '#898e92',
       'button-text':"#fff",
@@ -34,7 +32,7 @@ module.exports = {
       xl: "36px"
     },
     maxWidth: {
-      // '1/2': '50%',
+      
       'a4 ': '210mm',
     },
     maxHeight:{

@@ -9,9 +9,9 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@progress/kendo-drawing": "^1.16.3",
-    "@progress/kendo-licensing": "^1.2.2",
+    
     "@progress/kendo-react-pdf": "^5.5.0",
+  
     "autoprefixer": "^10.4.7",
     "date-fns": "^2.29.1",
     "next": "12.2.3",

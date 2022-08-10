@@ -1,24 +1,25 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange, Calendar } from "react-date-range";
-import React, { useState, useRef, forwardRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { format } from "date-fns";
 
 
 const Home: NextPage = () => {
+  
+
   const [isOpenDateRange, setOpenDateRange] = useState(null);
   const [isOpenCalander, setOpenCalander] = useState(false);
 
   const [invoiceDate, setInvoiceDate]: any = useState(null);
   const [isdownloadbtnClick, setDownloadbtnClick] = useState(false);
-  const [currencyType, setCurrencyType] = useState("dollar-sign-svgrepo-com (2).svg");
-  const [images, setImages]: any = useState("/stroke-infotech-logo.svg");
+  const [currencyType, setCurrencyType] = useState(["currency-dollar.svg","currency-dollar-bold.svg"]);
+  const [images, setImages]: any = useState(["/stroke-infotech-logo.svg"]);
   const [signatureImg, setSignatureImg]: any = useState(
     "/stroke-infotech-logo.svg"
   );
@@ -71,7 +72,7 @@ const Home: NextPage = () => {
     col4: "Amount",
   });
 
-  const pdfExportComponent = React.useRef<PDFExport>(null);
+  const pdfExportComponent = useRef<PDFExport>(null);
   const maxNumber = 69;
 
   const handleAllValues = (event: any) => {
@@ -99,16 +100,13 @@ const Home: NextPage = () => {
     ]);
   };
 
-  const handleTableData = (event: any, row: any, index: any) => {
+  const handleTableRow = (event: any, row: any, index: any) => {
     if (event.selection) {
-      console.log("event", event.selection);
       const updatedData = [...data];
       const item: any = { ...updatedData[index] };
       const start = format(event.selection.startDate, "dd/MM/yyyy");
       const end = format(event.selection.endDate, "dd/MM/yyyy");
 
-      // const startnew =format(start, 'dd/MM/yyyy')
-      console.log("start", start);
 
       let bothdate: any = start + " - " + end;
       item["billing_period"] = bothdate;
@@ -171,15 +169,11 @@ const Home: NextPage = () => {
     setTimeout(() => {
       if (pdfExportComponent.current) {
         pdfExportComponent.current.save();
-        setTimeout(() => {
+         setTimeout(() => {
           setDownloadbtnClick(false);
-        }, 5000);
+        }, 5000); 
       }
     }, 1000);
-  };
-
-  const handleGetDates = (item: any) => {
-    setDates([item.selection]);
   };
 
   // calculate total
@@ -199,21 +193,9 @@ const Home: NextPage = () => {
     temp;
 
   const handleoptions = (e: any) => {
-    console.log(typeof e.target.value);
     const currencyVar = e.target.value;
-    setCurrencyType(e.target.value)
-
-    
-    console.log(currencyVar);
-   /*  console.log(
-      new Intl.NumberFormat("de-DE", {
-        style: "currency",
-        currency: "EUR",
-      }).format(502)
-    ); */
-    // setCurrencyType(currencyVar);
+    setCurrencyType(currencyVar.split(",").slice(0));
   };
-
   const handleKeyDown = (e: any) => {
     e.target.style.height = "inherit";
     e.target.style.height = `${e.target.scrollHeight}px`;
@@ -238,15 +220,11 @@ const Home: NextPage = () => {
       setOpenDateRange(null);
     }
   };
-  const curr: any = new Intl.NumberFormat("de-DE", {
-    style: "currency",
-    currency: "EUR",
-  }).format(502);
+ 
 
-  const Euro = <img src="euro-svgrepo-com.svg" />;
   return (
     <>
-      <div className={styles.container}>
+      <div >
         <Head>
           <title>Create Next App</title>
 
@@ -264,6 +242,10 @@ const Home: NextPage = () => {
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
             rel="stylesheet"
           ></link>
+          <link
+            rel="stylesheet"
+            href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
+          ></link>
           <link href="" />
         </Head>
         {/* <xml version="1.0" encoding="UTF-8"></xml> */}
@@ -275,29 +257,25 @@ const Home: NextPage = () => {
             paperSize="A4"
             ref={pdfExportComponent}
             fileName={fileName}
+          
           >
-            {/* <div className='max-w-[210mm] min-h-[297mm] mx-auto shadow-card mb-2 bg-page'> */}
-
-            <div className="max-w-[210mm] min-h-[297mm] mx-auto shadow-card mb-2 bg-page ">
-              {/* <h1 className='border-2 border-rose-500'>Hello</h1> */}
+            {/* min-h-[297mm] */}
+            <div className="page-section max-w-[210mm] min-h-[297mm] mx-auto shadow-card mb-2 bg-page ">
 
               <div className="flex justify-between items-start border-b border-real-gray px-12 pt-14 pb-5">
                 <div className="w-2/4 pt-1">
                   <ImageUploading
-                    // multiple
                     value={images}
-                    // name="emp_image_name"
                     onChange={handleImages}
                     maxNumber={maxNumber}
                     dataURLKey="data_url"
                   >
                     {({
-                      // imageList,
                       onImageUpload,
                       isDragging,
                       dragProps,
                     }) => (
-                      // write your building UI
+                     
                       <div className="upload__image-wrapper max-w-[45%]">
                         <div className="w-full text-right">
                           <button
@@ -319,7 +297,7 @@ const Home: NextPage = () => {
                             >
                               <path d="M21.561,5.318l-2.879-2.879C18.389,2.146,18.005,2,17.621,2c-0.385,0-0.768,0.146-1.061,0.439L13,6H4C3.448,6,3,6.447,3,7  v13c0,0.553,0.448,1,1,1h13c0.552,0,1-0.447,1-1v-9l3.561-3.561C21.854,7.146,22,6.762,22,6.378S21.854,5.611,21.561,5.318z   M11.5,14.672L9.328,12.5l6.293-6.293l2.172,2.172L11.5,14.672z M8.939,13.333l1.756,1.728L9,15L8.939,13.333z M16,19H5V8h6  l-3.18,3.18c-0.293,0.293-0.478,0.812-0.629,1.289C7.031,12.969,7,13.525,7,13.939V17h3.061c0.414,0,1.108-0.1,1.571-0.29  c0.464-0.19,0.896-0.347,1.188-0.64L16,13V19z M18.5,7.672L16.328,5.5l1.293-1.293l2.171,2.172L18.5,7.672z" />
                             </svg>
-                            {/* <img src='/edit_icon.svg' /> */}
+                          
                           </button>
                         </div>
                         <div className="image-item">
@@ -328,7 +306,7 @@ const Home: NextPage = () => {
                       </div>
                     )}
                   </ImageUploading>
-                  {/* <img src='stroke-infotech-logo.svg' /> */}
+                 
                 </div>
                 <div className="w-2/4  company-details ">
                   <input
@@ -336,20 +314,20 @@ const Home: NextPage = () => {
                     placeholder="Invoice"
                     name="invoice"
                     value={defaultVal.invoice}
-                    /* style={{ paddingRight: isdownloadbtnClick ? "12px" : 0 }} */ className="invoice text-xl leading-9 break-normal uppercase mb-2 text-primary font-bold hover:bg-input-hover w-full text-right"
+                   className="invoice text-xl leading-9 break-normal uppercase mb-2 text-primary font-bold hover:bg-input-hover w-full text-right"
                     onChange={handleAllValues}
                   />
                   <input
                     type="text"
                     name="company_name"
                     value={defaultVal.company_name}
-                    /* style={{ paddingRight: isdownloadbtnClick ? "12px" : 0 }} */ className="company-name block text-xs text-primary w-full font-bold capitalize hover:bg-input-hover text-right"
+                     className="company-name block text-xs text-primary w-full font-bold capitalize hover:bg-input-hover text-right"
                     onChange={handleAllValues}
                   />
 
                   <textarea
                     id="txtarea"
-                    rows={3}
+                    rows={isdownloadbtnClick ? 2 : 3}
                     name="company_address"
                     value={defaultVal.company_address}
                     className="address text-xs w-[75%] self-end flex mb-1 ml-auto text-secondary font-medium hover:bg-input-hover text-right resize-none hover:resize"
@@ -360,7 +338,7 @@ const Home: NextPage = () => {
                     type="text"
                     name="company_contact_number"
                     value={defaultVal.company_contact_number}
-                    /* style={{ paddingRight: isdownloadbtnClick ? "4px" : 0 }} */ className="mobile-number  block text-secondary w-full font-medium text-xs text-right hover:bg-input-hover"
+                     className="mobile-number  block text-secondary w-full font-medium text-xs text-right hover:bg-input-hover"
                     onChange={handleAllValues}
                   />
                 </div>
@@ -384,7 +362,7 @@ const Home: NextPage = () => {
                     onChange={handleAllValues}
                   />
                   <textarea
-                    rows={3}
+                     rows={isdownloadbtnClick ? 2 : 3}
                     name="client_address"
                     value={defaultVal.client_address}
                     className="text-xs w-3/5 py-1 text-secondary font-medium hover:bg-input-hover resize-none hover:resize"
@@ -485,7 +463,7 @@ const Home: NextPage = () => {
                               className="relative max-w-[65%] hover:bg-input-hover text-secondary font-medium text-xs"
                               onChange={handleAllValues}
                               onClick={openCalander}
-                              /* value={defaultVal.invoice_date} */
+
                             />
 
                             <img
@@ -498,7 +476,6 @@ const Home: NextPage = () => {
                             {isOpenCalander ? (
                               <Calendar
                                 className="absolute right-[35px] top-[26px] z-10"
-                                // onChange={handleAllValues}
                                 onChange={(item) => {
                                   setInvoiceDate(item);
                                   setOpenCalander(false);
@@ -508,14 +485,6 @@ const Home: NextPage = () => {
                             ) : (
                               ""
                             )}
-
-                            {/*  <input
-                            type="date"
-                            name="invoice_date"
-                            value={defaultVal.invoice_date}
-                            className="max-w-[65%] hover:bg-input-hover text-secondary font-medium text-xs"
-                            onChange={handleAllValues}
-                          /> */}
                           </td>
                         )}
                       </tr>
@@ -554,11 +523,11 @@ const Home: NextPage = () => {
                 </div>
               </div>
 
+            
               {/* third section */}
               {isdownloadbtnClick ? (
                 ""
               ) : (
-                // <div className="flex py-2 px-12 justify-end">
                 <div className="flex py-2 px-12 justify-end">
                   <form action="/action_page.php" className="w-[22%]">
                     <label className="text-secondary font-bold text-xs pr-1">
@@ -570,35 +539,26 @@ const Home: NextPage = () => {
                       onChange={handleoptions}
                     >
                       <option
-                      //  value="/dollar-sign-svgrepo-com.svg"
-                      //  value="/dollar-svgrepo-com.svg"
-                      //  value="dollar-sign-svgrepo-com (2).svg"
-                      value="iconmonstr-currency-3.svg"
+                        value={["currency-dollar.svg","currency-dollar-bold.svg"]}
                         className="text-secondary font-bold text-xs"
                       >
                         $
                       </option>
                       <option
-                      value="iconmonstr-currency-10.svg"
-                      // value="/british-pound-svgrepo-com.svg"
-                        // value="/pound-svgrepo-com (1).svg"
+                        value={["currency-pound.svg","currency-pound-bold.svg"]}
                         className="text-secondary font-bold text-xs"
                       >
                         £
                       </option>
 
                       <option
-                      value="iconmonstr-currency-6.svg"
-                      // value="/euro-svgrepo-com (2).svg"
-                        // value="/euro-svgrepo-com.svg"
+                        value={["currency-euro.svg","currency-euro-bold.svg"]}
                         className="text-secondary font-bold text-xs"
                       >
                         €
                       </option>
                       <option
-                      value="/iconmonstr-currency-25.svg"
-                        // value="/Indian-Rupee-symbol.svg"
-                        // value="/currency-inr-bold-svgrepo-com.svg"
+                        value={["currency-inr.svg","currency-inr-bold.svg"]}
                         className="text-secondary font-bold text-xs"
                       >
                         ₹
@@ -607,8 +567,8 @@ const Home: NextPage = () => {
                   </form>
                 </div>
               )}
-
-              <div className="px-12 min-h-[450px]">
+              {/* min-h-[450px] */}
+              <div className="px-12 service-description">
                 <table className="table-fixed w-full text-left" id="mythead">
                   <thead className="border-y border-real-gray">
                     <tr>
@@ -668,13 +628,8 @@ const Home: NextPage = () => {
                               ""
                             ) : (
                               <>
-                                {/* w-[25%]  */}
+                                
                                 <td className=" w-[30%] align-top items-start relative">
-                                  {/*  <span><img
-                                  src="/calendar.svg"
-                                  width="12px"
-                                  height="12px"
-                                  className="order-2 hover:bg-input-hover hover:cursor-pointer" /> */}
                                   <input
                                     type="text"
                                     id={index.toString()}
@@ -691,7 +646,6 @@ const Home: NextPage = () => {
                                     }}
                                     className=" hover:bg-input-hover w-full text-left text-secondary font-medium text-xs block"
                                   />
-                                  {/* </span> */}
                                   <img
                                     src="/calendar.svg"
                                     width="12px"
@@ -709,7 +663,7 @@ const Home: NextPage = () => {
                                       name="billing_period"
                                       value={row.billing_period}
                                       onChange={(e) => {
-                                        handleTableData(e, row, index);
+                                        handleTableRow(e, row, index);
                                       }}
                                       moveRangeOnFirstSelection={false}
                                       ranges={getDates}
@@ -718,12 +672,7 @@ const Home: NextPage = () => {
                                     ""
                                   )}
 
-                                  {/* {isdownloadbtnClick ?
-                              <p className="text-secondary font-medium text-xs block">{row.billing_period_startDate === "" ? "" : new Date(row?.billing_period_startDate).toLocaleDateString()}- {row.billing_period_endDate === "" ? "" : new Date(row?.billing_period_endDate).toLocaleDateString()}</p>
-                              : <>
-                                <input type="date" data-date="" data-date-format="DD MMMM YYYY" multiple name="billing_period_startDate" value={row.billing_period_startDate} className='block text-secondary font-medium text-xs' onChange={(e) => { handleTableData(e, row, index) }} />
-                                <input type="date" data-date="" data-date-format="DD MMMM YYYY" name="billing_period_endDate" value={row.billing_period_endDate} className='block text-secondary font-medium text-xs' onChange={(e) => { handleTableData(e, row, index) }} />
-                              </>} */}
+                                
                                 </td>
                                 <td className=" w-[40%] pl-1 items-start">
                                   {isdownloadbtnClick ? (
@@ -742,7 +691,7 @@ const Home: NextPage = () => {
                                       value={row.item_name}
                                       className="item_name w-full block hover:bg-input-hover resize-none hover:resize leading-4 text-primary font-bold text-xs"
                                       onChange={(e) => {
-                                        handleTableData(e, row, index);
+                                        handleTableRow(e, row, index);
                                       }}
                                       onKeyDown={handleKeyDown}
                                     />
@@ -763,7 +712,7 @@ const Home: NextPage = () => {
                                       value={row.item_desc}
                                       className="item_desc hover:bg-input-hover w-full resize-none hover:resize leading-4 text-xs text-secondary font-medium"
                                       onChange={(e) => {
-                                        handleTableData(e, row, index);
+                                        handleTableRow(e, row, index);
                                       }}
                                       onKeyDown={handleKeyDown}
                                     />
@@ -779,18 +728,30 @@ const Home: NextPage = () => {
                                     />
                                   ) : (
                                     <>
-                                     
-                                    <span className="w-full text-secondary font-medium text-xs inline-flex items-center">
-                                        {/* {currencyType}{" "} */}
-                                       
-                                        <img src={currencyType} />
+                                      <span className=" text-secondary font-medium text-xs inline-flex items-center">
+                                        <img
+                                          src={currencyType[0]}
+                                          className="currency-symbol "
+                                          style={{
+                                            marginRight: isdownloadbtnClick
+                                              ? "2px"
+                                              : "0",
+                                              width: isdownloadbtnClick
+                                              ? "10px"
+                                              : "12px",
+                                            height: isdownloadbtnClick
+                                              ? "10px"
+                                              : "12px",
+                                          
+                                          }}
+                                        />
                                         <input
                                           type="number"
                                           name="item_price"
                                           value={`${row?.item_price}`}
-                                          className="item_price hover:bg-input-hover w-full text-left text-secondary font-medium text-xs block"
+                                          className="item_price hover:bg-input-hover w-full text-left text-secondary font-medium text-xs "
                                           onChange={(e) => {
-                                            handleTableData(e, row, index);
+                                            handleTableRow(e, row, index);
                                           }}
                                         />
                                       </span>
@@ -811,15 +772,15 @@ const Home: NextPage = () => {
                                       type="number"
                                       name="item_quantity"
                                       value={row?.item_quantity}
-                                      className=" hover:bg-input-hover w-full text-left text-secondary font-medium text-xs"
+                                      className="item-quantity hover:bg-input-hover w-full text-left text-secondary font-medium text-xs"
                                       onChange={(e) => {
-                                        handleTableData(e, row, index);
+                                        handleTableRow(e, row, index);
                                       }}
                                     />
                                   )}
                                 </td>
 
-                                <td className=" w-[10%] align-top text-secondary font-medium text-xs relative text-left relatve">
+                                <td className=" w-[10%] align-top text-secondary font-medium text-xs relative text-left">
                                   {isdownloadbtnClick &&
                                   row.item_amount === "" ? (
                                     <input
@@ -830,14 +791,25 @@ const Home: NextPage = () => {
                                   ) : (
                                     <>
                                       <span className="text-secondary font-medium text-xs inline-flex items-center">
-                                      <img src={currencyType} />
+                                       <img
+                                          src={currencyType[0]}
+                                          className="currency-symbol"
+                                          style={{
+                                            width: isdownloadbtnClick
+                                              ? "10px"
+                                              : "12px",
+                                            height: isdownloadbtnClick
+                                              ? "10px"
+                                              : "12px",
+                                          }}
+                                        />
                                         <input
                                           type="number"
                                           name="item_amount"
                                           value={row?.item_amount}
                                           className="item_amount hover:bg-input-hover w-full text-left text-secondary font-medium text-xs"
                                           onChange={(e) => {
-                                            handleTableData(e, row, index);
+                                            handleTableRow(e, row, index);
                                           }}
                                         />
                                       </span>
@@ -908,8 +880,15 @@ const Home: NextPage = () => {
                           <>
                             {" "}
                             <span className="inline-flex font-bold text-xs text-primary items-center">
-                            <img src={currencyType}  />
-                           
+                              <img
+                                src={currencyType[1]}
+                                className="currency-symbol"
+                                style={{
+                                  width: isdownloadbtnClick ? "10px" : "12px",
+                                  height: isdownloadbtnClick ? "10px" : "12px",
+                                }}
+                              />
+
                               <input
                                 type="number"
                                 disabled
@@ -926,8 +905,9 @@ const Home: NextPage = () => {
                 </table>
               </div>
 
-              <div /* className="absolute w-full bottom-[0px]"  */>
-                {/* {isdownloadbtnClick ? "" : <> */}
+
+              <div className="note-section">
+                
                 <ImageUploading
                   value={signatureImg}
                   onChange={handleSignature}
@@ -935,12 +915,11 @@ const Home: NextPage = () => {
                   dataURLKey="data_url"
                 >
                   {({
-                    // imageList,
                     onImageUpload,
                     isDragging,
                     dragProps,
                   }) => (
-                    // write your building UI
+                    
                     <div className="upload__image-wrapper px-12 py-6">
                       <div className="image-signature max-w-[20%] ml-auto">
                         <img
@@ -975,7 +954,7 @@ const Home: NextPage = () => {
                   )}
                 </ImageUploading>
 
-                <div className="px-12 w-full my-6 py-4">
+                <div className="px-12 w-full mt-6 py-4">
                   <textarea
                     rows={1}
                     value={defaultVal.note}
@@ -985,6 +964,7 @@ const Home: NextPage = () => {
                   />
                 </div>
               </div>
+                {/* </div> */}
             </div>
           </PDFExport>
 
@@ -998,12 +978,9 @@ const Home: NextPage = () => {
             </button>
           </div>
         </div>
-
-        {/* <InvoiceFromSection /> */}
-
-        {/* </body> */}
       </div>
-    </>
+
+       </>
   );
 };
 

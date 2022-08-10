@@ -4,8 +4,13 @@
 
 body {
   font-family: 'Inter', sans-serif;
+ 
 }
-
+@font-face {
+  font-family: "Nunito";
+  font-weight: bold;
+  src: url("https://fonts.gstatic.com/s/nunito/v12/XRXW3I6Li01BKofA6sKUYevN.ttf'");
+}
 html {
   font-family: 'Inter', sans-serif;
 }
@@ -20,8 +25,9 @@ kendo-pdf-document .delete-button,
 kendo-pdf-document .add-button {
   display: none;
 }
-#mytbody tr:first-child td .delete-button{
-  top:19px;
+
+#mytbody tr:first-child td .delete-button {
+  top: 19px;
 }
 
 input::-webkit-outer-spin-button,
@@ -47,7 +53,7 @@ kendo-pdf-document .company-details textarea {
   justify-content: right;
   display: flex;
   margin-left: auto;
- 
+
 
 }
 
@@ -101,65 +107,106 @@ input:focus,
 textarea:focus {
   outline-style: solid;
   outline-color: #d8dadb;
- 
+
 }
 
 select:focus {
   outline-color: #d8dadb;
-  border:none;
-  
+  border: none;
+
 }
+
 input,
-textarea{
+textarea {
   padding: 4px 4px;
 }
+
 kendo-pdf-document input,
-kendo-pdf-document textarea{
+kendo-pdf-document textarea {
+  padding: 0;
+}
+input.item_price,
+input.item_amount,
+input.item-quantity,
+input.sum{
+  padding:4px 0;
+}
+kendo-pdf-document input.item_price,
+kendo-pdf-document input.item_amount,
+kendo-pdf-document input.item-quantity,
+kendo-pdf-document input.sum{
   padding:0;
 }
 
-#invoice-details tr td input{
+
+
+#invoice-details tr td input {
   padding: 4px 4px;
 }
-#invoice-details tr td span{
+
+#invoice-details tr td span {
   align-items: center;
 }
-kendo-pdf-document #invoice-details tr td input{
+
+kendo-pdf-document #invoice-details tr td input {
   padding: 0px;
 }
-kendo-pdf-document .client_name{
-margin-bottom: 0;
+
+kendo-pdf-document .client_name {
+  margin-bottom: 0;
 }
 
 
 
- kendo-pdf-document .calender-icon {
-display: none;
-} 
-#mytbody tr:first-child .calender-icon{
-top:21px;
+kendo-pdf-document .calender-icon {
+  display: none;
 }
 
-#mythead tr th{
+#mytbody tr:first-child .calender-icon {
+  top: 21px;
+}
+
+#mythead tr th {
   padding: 8px 0;
 }
-#mytbody tr td{
+
+#mytbody tr td {
   padding-bottom: 14px;
 }
 
-#mytbody tr:first-child td{
+#mytbody tr:first-child td {
   padding-top: 14px;
 }
 
-/* #mytbody tr.add-item td{
-  padding: 0;
-} */
-kendo-pdf-document #mytbody tr.add-item td{
+kendo-pdf-document #mytbody tr.add-item td {
   padding-bottom: 2px;
 }
-kendo-pdf-document #mytbody tr td{
+
+kendo-pdf-document #mytbody tr td {
   padding-bottom: 10px;
 }
-kendo-pdf-document #mytbody tr:first-child td{
+
+kendo-pdf-document #mytbody tr:first-child td {
   padding-top: 10px;
 }
+
+/* kendo-pdf-document .note-section,
+kendo-pdf-document .note-section textarea{
+  flex-grow: 1;
+  margin-bottom: 0;
+  padding-bottom: 0;
+} */
+kendo-pdf-document .page-section{
+position: relative;
+}
+kendo-pdf-document .note-section{
+  position:absolute;
+  width:100%;
+  bottom: 90px;
+}
+ .service-description{
+  min-height: 100vh;
+}
+kendo-pdf-document .service-description{
+min-height: auto;
+} 
