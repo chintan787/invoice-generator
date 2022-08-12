@@ -120,7 +120,11 @@ input,
 textarea {
   padding: 4px 4px;
 }
-
+/* textarea.item_name,
+textarea.item_desc{
+  padding:8px;
+}
+ */
 kendo-pdf-document input,
 kendo-pdf-document textarea {
   padding: 0;
@@ -205,7 +209,7 @@ kendo-pdf-document .note-section{
   bottom: 90px;
 }
  .service-description{
-  min-height: 100vh;
+  min-height: 400px;
 }
 kendo-pdf-document .service-description{
 min-height: auto;

@@ -8,17 +8,18 @@ import React, { useState, useRef } from "react";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { format } from "date-fns";
-
+// import { DateRangePicker } from 'rsuite';
 
 const Home: NextPage = () => {
-  
-
   const [isOpenDateRange, setOpenDateRange] = useState(null);
   const [isOpenCalander, setOpenCalander] = useState(false);
 
   const [invoiceDate, setInvoiceDate]: any = useState(null);
   const [isdownloadbtnClick, setDownloadbtnClick] = useState(false);
-  const [currencyType, setCurrencyType] = useState(["currency-dollar.svg","currency-dollar-bold.svg"]);
+  const [currencyType, setCurrencyType] = useState([
+    "currency-dollar.svg",
+    "currency-dollar-bold.svg",
+  ]);
   const [images, setImages]: any = useState(["/stroke-infotech-logo.svg"]);
   const [signatureImg, setSignatureImg]: any = useState(
     "/stroke-infotech-logo.svg"
@@ -102,11 +103,12 @@ const Home: NextPage = () => {
 
   const handleTableRow = (event: any, row: any, index: any) => {
     if (event.selection) {
+      console.log("event", event.selection);
+
       const updatedData = [...data];
       const item: any = { ...updatedData[index] };
       const start = format(event.selection.startDate, "dd/MM/yyyy");
       const end = format(event.selection.endDate, "dd/MM/yyyy");
-
 
       let bothdate: any = start + " - " + end;
       item["billing_period"] = bothdate;
@@ -166,14 +168,21 @@ const Home: NextPage = () => {
 
   const exportPDFWithComponent = () => {
     setDownloadbtnClick(true);
-    setTimeout(() => {
-      if (pdfExportComponent.current) {
-        pdfExportComponent.current.save();
-         setTimeout(() => {
-          setDownloadbtnClick(false);
-        }, 5000); 
-      }
-    }, 1000);
+    console.log("data", data);
+    console.log("data", data[0].item_name !== "" || data[0].item_desc !== "");
+   /*  if (data[0].item_name !== "" || data[0].item_desc !== "") {
+      console.log("if call"); */
+       setTimeout(() => {
+        if (pdfExportComponent.current) {
+          console.log("pdf save if call");
+
+          pdfExportComponent.current.save();
+          setTimeout(() => {
+            setDownloadbtnClick(false);
+          }, 5000);
+        }
+      }, 1000); 
+    // }
   };
 
   // calculate total
@@ -220,11 +229,14 @@ const Home: NextPage = () => {
       setOpenDateRange(null);
     }
   };
- 
+
+  const handleMonthandYear = (e) => {
+    console.log("e", e);
+  };
 
   return (
     <>
-      <div >
+      <div>
         <Head>
           <title>Create Next App</title>
 
@@ -257,11 +269,9 @@ const Home: NextPage = () => {
             paperSize="A4"
             ref={pdfExportComponent}
             fileName={fileName}
-          
           >
             {/* min-h-[297mm] */}
             <div className="page-section max-w-[210mm] min-h-[297mm] mx-auto shadow-card mb-2 bg-page ">
-
               <div className="flex justify-between items-start border-b border-real-gray px-12 pt-14 pb-5">
                 <div className="w-2/4 pt-1">
                   <ImageUploading
@@ -270,12 +280,7 @@ const Home: NextPage = () => {
                     maxNumber={maxNumber}
                     dataURLKey="data_url"
                   >
-                    {({
-                      onImageUpload,
-                      isDragging,
-                      dragProps,
-                    }) => (
-                     
+                    {({ onImageUpload, isDragging, dragProps }) => (
                       <div className="upload__image-wrapper max-w-[45%]">
                         <div className="w-full text-right">
                           <button
@@ -287,6 +292,7 @@ const Home: NextPage = () => {
                             <svg
                               baseProfile="tiny"
                               height="24px"
+                              fill="#898e92"
                               id="Layer_1"
                               version="1.2"
                               viewBox="0 0 24 24"
@@ -297,7 +303,6 @@ const Home: NextPage = () => {
                             >
                               <path d="M21.561,5.318l-2.879-2.879C18.389,2.146,18.005,2,17.621,2c-0.385,0-0.768,0.146-1.061,0.439L13,6H4C3.448,6,3,6.447,3,7  v13c0,0.553,0.448,1,1,1h13c0.552,0,1-0.447,1-1v-9l3.561-3.561C21.854,7.146,22,6.762,22,6.378S21.854,5.611,21.561,5.318z   M11.5,14.672L9.328,12.5l6.293-6.293l2.172,2.172L11.5,14.672z M8.939,13.333l1.756,1.728L9,15L8.939,13.333z M16,19H5V8h6  l-3.18,3.18c-0.293,0.293-0.478,0.812-0.629,1.289C7.031,12.969,7,13.525,7,13.939V17h3.061c0.414,0,1.108-0.1,1.571-0.29  c0.464-0.19,0.896-0.347,1.188-0.64L16,13V19z M18.5,7.672L16.328,5.5l1.293-1.293l2.171,2.172L18.5,7.672z" />
                             </svg>
-                          
                           </button>
                         </div>
                         <div className="image-item">
@@ -306,7 +311,6 @@ const Home: NextPage = () => {
                       </div>
                     )}
                   </ImageUploading>
-                 
                 </div>
                 <div className="w-2/4  company-details ">
                   <input
@@ -314,14 +318,14 @@ const Home: NextPage = () => {
                     placeholder="Invoice"
                     name="invoice"
                     value={defaultVal.invoice}
-                   className="invoice text-xl leading-9 break-normal uppercase mb-2 text-primary font-bold hover:bg-input-hover w-full text-right"
+                    className="invoice text-xl leading-9 break-normal uppercase mb-2 text-primary font-bold hover:bg-input-hover w-full text-right"
                     onChange={handleAllValues}
                   />
                   <input
                     type="text"
                     name="company_name"
                     value={defaultVal.company_name}
-                     className="company-name block text-xs text-primary w-full font-bold capitalize hover:bg-input-hover text-right"
+                    className="company-name block text-xs text-primary w-full font-bold capitalize hover:bg-input-hover text-right"
                     onChange={handleAllValues}
                   />
 
@@ -338,7 +342,7 @@ const Home: NextPage = () => {
                     type="text"
                     name="company_contact_number"
                     value={defaultVal.company_contact_number}
-                     className="mobile-number  block text-secondary w-full font-medium text-xs text-right hover:bg-input-hover"
+                    className="mobile-number  block text-secondary w-full font-medium text-xs text-right hover:bg-input-hover"
                     onChange={handleAllValues}
                   />
                 </div>
@@ -351,7 +355,7 @@ const Home: NextPage = () => {
                     type="text"
                     name="bill_to"
                     value={defaultVal.bill_to}
-                    className="uppercase w-full text-info font-bold text-xs hover:bg-input-hover"
+                    className="uppercase w-full text-info font-bold text-xs hover:bg-input-hover mb-1"
                     onChange={handleAllValues}
                   />
                   <input
@@ -362,7 +366,7 @@ const Home: NextPage = () => {
                     onChange={handleAllValues}
                   />
                   <textarea
-                     rows={isdownloadbtnClick ? 2 : 3}
+                    rows={isdownloadbtnClick ? 2 : 3}
                     name="client_address"
                     value={defaultVal.client_address}
                     className="text-xs w-3/5 py-1 text-secondary font-medium hover:bg-input-hover resize-none hover:resize"
@@ -389,13 +393,13 @@ const Home: NextPage = () => {
                 <div className="w-2/4">
                   <table className="ml-auto table-fixed" id="invoice-details">
                     <tbody id="rel">
-                      <tr className="leading-4 font-bold">
+                      <tr className="leading-[21px] font-bold">
                         <td className="p-0">
                           <input
                             type="text"
                             name="invoice_number_title"
                             value={defaultVal.invoice_number_title}
-                            className="text-right hover:bg-input-hover capitalize text-primary font-bold text-xs"
+                            className="text-right hover:bg-input-hover capitalize text-primary font-bold text-xs leading-[21px]"
                             onChange={handleAllValues}
                           />
                         </td>
@@ -415,7 +419,7 @@ const Home: NextPage = () => {
                           ) : (
                             <>
                               {" "}
-                              <span className="max-w-[65%] text-secondary font-medium text-xs inline-flex prefix">
+                              <span className="max-w-[65%] leading-[21px]  text-secondary font-medium text-xs inline-flex prefix">
                                 #
                                 <input
                                   type="text"
@@ -435,7 +439,7 @@ const Home: NextPage = () => {
                             type="text"
                             name="invoice_date_title"
                             value={defaultVal.invoice_date_title}
-                            className="text-right hover:bg-input-hover text-primary font-bold text-xs capitalize text-right"
+                            className="text-right leading-[21px] hover:bg-input-hover text-primary font-bold text-xs capitalize text-right"
                             onChange={handleAllValues}
                           />
                         </td>
@@ -455,27 +459,27 @@ const Home: NextPage = () => {
                               type="text"
                               name="invoice_date"
                               placeholder="Select date"
+                              autoComplete="off"
                               value={
                                 invoiceDate !== null
                                   ? format(invoiceDate, "dd/MM/yyyy")
                                   : ""
                               }
-                              className="relative max-w-[65%] hover:bg-input-hover text-secondary font-medium text-xs"
+                              className="relative leading-[21px] max-w-[65%] hover:bg-input-hover text-secondary font-medium text-xs "
                               onChange={handleAllValues}
                               onClick={openCalander}
-
                             />
 
                             <img
                               src="/calendar.svg"
                               width="12px"
                               height="12px"
-                              className="calender-icon absolute right-[80px] top-[6px] hover:cursor-pointer "
+                              className="calender-icon absolute right-[80px] top-[9px] hover:cursor-pointer "
                               onClick={openCalander}
                             />
                             {isOpenCalander ? (
                               <Calendar
-                                className="absolute right-[35px] top-[26px] z-10"
+                                className="absolute right-[35px] top-[32px] z-10"
                                 onChange={(item) => {
                                   setInvoiceDate(item);
                                   setOpenCalander(false);
@@ -494,7 +498,7 @@ const Home: NextPage = () => {
                             type="text"
                             name="invoice_pament_due_title"
                             value={defaultVal.invoice_pament_due_title}
-                            className="text-right hover:bg-input-hover text-primary font-bold text-xs capitalize text-right"
+                            className="text-right leading-[21px] hover:bg-input-hover text-primary font-bold text-xs capitalize text-right"
                             onChange={handleAllValues}
                           />
                         </td>
@@ -512,7 +516,7 @@ const Home: NextPage = () => {
                               type="text"
                               name="invoice_pament_due"
                               value={defaultVal.invoice_pament_due}
-                              className="max-w-[65%] hover:bg-input-hover text-secondary font-medium text-xs"
+                              className="max-w-[65%] leading-[21px] hover:bg-input-hover text-secondary font-medium text-xs"
                               onChange={handleAllValues}
                             />
                           </td>
@@ -523,7 +527,6 @@ const Home: NextPage = () => {
                 </div>
               </div>
 
-            
               {/* third section */}
               {isdownloadbtnClick ? (
                 ""
@@ -539,26 +542,32 @@ const Home: NextPage = () => {
                       onChange={handleoptions}
                     >
                       <option
-                        value={["currency-dollar.svg","currency-dollar-bold.svg"]}
+                        value={[
+                          "currency-dollar.svg",
+                          "currency-dollar-bold.svg",
+                        ]}
                         className="text-secondary font-bold text-xs"
                       >
                         $
                       </option>
                       <option
-                        value={["currency-pound.svg","currency-pound-bold.svg"]}
+                        value={[
+                          "currency-pound.svg",
+                          "currency-pound-bold.svg",
+                        ]}
                         className="text-secondary font-bold text-xs"
                       >
                         £
                       </option>
 
                       <option
-                        value={["currency-euro.svg","currency-euro-bold.svg"]}
+                        value={["currency-euro.svg", "currency-euro-bold.svg"]}
                         className="text-secondary font-bold text-xs"
                       >
                         €
                       </option>
                       <option
-                        value={["currency-inr.svg","currency-inr-bold.svg"]}
+                        value={["currency-inr.svg", "currency-inr-bold.svg"]}
                         className="text-secondary font-bold text-xs"
                       >
                         ₹
@@ -628,13 +637,13 @@ const Home: NextPage = () => {
                               ""
                             ) : (
                               <>
-                                
                                 <td className=" w-[30%] align-top items-start relative">
                                   <input
                                     type="text"
                                     id={index.toString()}
                                     name="billing_period"
                                     placeholder="Select Dates"
+                                    autoComplete="off"
                                     value={
                                       isdownloadbtnClick &&
                                       row.billing_period === ""
@@ -656,28 +665,32 @@ const Home: NextPage = () => {
                                     }}
                                   />
 
+                                  {/* <DateRangePicker showOneCalendar /> */}
+
                                   {isOpenDateRange === index ? (
-                                    <DateRange
-                                      className="border border-real-gray absolute z-10"
-                                      editableDateInputs={true}
-                                      name="billing_period"
-                                      value={row.billing_period}
-                                      onChange={(e) => {
-                                        handleTableRow(e, row, index);
-                                      }}
-                                      moveRangeOnFirstSelection={false}
-                                      ranges={getDates}
-                                    />
+                                    <>
+                                      {/* top-[80%] */}
+                                      <DateRange
+                                        className="border border-real-gray absolute  z-10"
+                                        editableDateInputs={true}
+                                        name="billing_period"
+                                        value={row.billing_period}
+                                        onChange={(e) => {
+                                          handleTableRow(e, row, index);
+                                        }}
+                                        moveRangeOnFirstSelection={false}
+                                        ranges={getDates}
+                                      />
+                                      {/* <button className="absolute z-10 bg-button-bg text-button-text p-2 mt-1 font-medium text-sm"  onClick={handleClose}>Close</button> */}
+                                    </>
                                   ) : (
                                     ""
                                   )}
-
-                                
                                 </td>
                                 <td className=" w-[40%] pl-1 items-start">
                                   {isdownloadbtnClick ? (
                                     row.item_name !== "" ? (
-                                      <p className="item_name w-full block resize-none hover:resize leading-4 text-primary font-bold text-xs">
+                                      <p className="item_name w-full block resize-none hover:resize text-primary font-bold text-xs">
                                         {row.item_name}
                                       </p>
                                     ) : (
@@ -685,11 +698,12 @@ const Home: NextPage = () => {
                                     )
                                   ) : (
                                     <textarea
+                                      // type="text"
                                       rows={1}
                                       name="item_name"
                                       placeholder="Enter Item title"
                                       value={row.item_name}
-                                      className="item_name w-full block hover:bg-input-hover resize-none hover:resize leading-4 text-primary font-bold text-xs"
+                                      className="item_name w-full block hover:bg-input-hover resize-none hover:resize text-primary font-bold text-xs "
                                       onChange={(e) => {
                                         handleTableRow(e, row, index);
                                       }}
@@ -699,7 +713,7 @@ const Home: NextPage = () => {
 
                                   {isdownloadbtnClick ? (
                                     row.item_desc !== "" ? (
-                                      <p className="item_desc hover:bg-input-hover w-full resize-none hover:resize leading-4 text-xs text-secondary font-medium">
+                                      <p className="item_desc hover:bg-input-hover w-full resize-none hover:resize text-xs text-secondary font-medium">
                                         {row.item_desc}
                                       </p>
                                     ) : (
@@ -710,7 +724,7 @@ const Home: NextPage = () => {
                                       name="item_desc"
                                       placeholder="Enter Item description"
                                       value={row.item_desc}
-                                      className="item_desc hover:bg-input-hover w-full resize-none hover:resize leading-4 text-xs text-secondary font-medium"
+                                      className="item_desc hover:bg-input-hover w-full resize-none hover:resize text-xs text-secondary font-medium"
                                       onChange={(e) => {
                                         handleTableRow(e, row, index);
                                       }}
@@ -736,13 +750,12 @@ const Home: NextPage = () => {
                                             marginRight: isdownloadbtnClick
                                               ? "2px"
                                               : "0",
-                                              width: isdownloadbtnClick
+                                            width: isdownloadbtnClick
                                               ? "10px"
                                               : "12px",
                                             height: isdownloadbtnClick
                                               ? "10px"
                                               : "12px",
-                                          
                                           }}
                                         />
                                         <input
@@ -791,7 +804,7 @@ const Home: NextPage = () => {
                                   ) : (
                                     <>
                                       <span className="text-secondary font-medium text-xs inline-flex items-center">
-                                       <img
+                                        <img
                                           src={currencyType[0]}
                                           className="currency-symbol"
                                           style={{
@@ -838,7 +851,8 @@ const Home: NextPage = () => {
                     <tr className="add-item border-b-2 border-real-gray ">
                       <td className="">
                         <button
-                          className="flex add-button items-center capitalize text-secondary font-medium text-xs "
+                          disabled={data[0].item_name === "" && data[0].item_desc ==="" ? true : false}
+                          className="flex disabled:opacity-75 disabled:cursor-not-allowed add-button items-center capitalize text-secondary font-medium text-xs "
                           onClick={addRow}
                         >
                           <img
@@ -905,21 +919,14 @@ const Home: NextPage = () => {
                 </table>
               </div>
 
-
               <div className="note-section">
-                
                 <ImageUploading
                   value={signatureImg}
                   onChange={handleSignature}
                   maxNumber={maxNumber}
                   dataURLKey="data_url"
                 >
-                  {({
-                    onImageUpload,
-                    isDragging,
-                    dragProps,
-                  }) => (
-                    
+                  {({ onImageUpload, isDragging, dragProps }) => (
                     <div className="upload__image-wrapper px-12 py-6">
                       <div className="image-signature max-w-[20%] ml-auto">
                         <img
@@ -938,6 +945,7 @@ const Home: NextPage = () => {
                           <svg
                             baseProfile="tiny"
                             height="24px"
+                            fill="#898e92"
                             id="Layer_1"
                             version="1.2"
                             viewBox="0 0 24 24"
@@ -964,23 +972,23 @@ const Home: NextPage = () => {
                   />
                 </div>
               </div>
-                {/* </div> */}
+              {/* </div> */}
             </div>
           </PDFExport>
 
           <div className="flex justify-center w-full my-2.5">
             <button
               type="submit"
+              disabled={data[0].item_name === "" && data[0].item_desc === "" ? true : false}
               onClick={exportPDFWithComponent}
-              className="text-center border text-center border-slate-100 p-2 mt-15 mb-15 font-medium text-sm bg-button-bg text-button-text"
+              className="text-center disabled:opacity-75 disabled:cursor-not-allowed border text-center border-slate-100 p-2 mt-15 mb-15 font-medium text-sm bg-button-bg text-button-text"
             >
               Download
             </button>
           </div>
         </div>
       </div>
-
-       </>
+    </>
   );
 };
 
