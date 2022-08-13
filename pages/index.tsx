@@ -4,13 +4,26 @@ import styles from "../styles/Home.module.css";
 import "react-date-range/dist/styles.css"; // main style file
 import "react-date-range/dist/theme/default.css"; // theme css file
 import { DateRange, Calendar } from "react-date-range";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { PDFExport } from "@progress/kendo-react-pdf";
 import ImageUploading, { ImageListType } from "react-images-uploading";
 import { format } from "date-fns";
-// import { DateRangePicker } from 'rsuite';
+// import ReactCrop from 'react-image-crop';
+// import 'react-image-crop/dist/ReactCrop.css';
+
+import Cropper from "cropperjs";
+import "cropperjs/dist/cropper.min.css";
+// import "./imagecroper.css";
+import { useDropzone } from "react-dropzone";
 
 const Home: NextPage = () => {
+  const [imageDestination, setImageDestination]: any = useState(null);
+  const [src, setSrc]: any = useState(null);
+
+  const [isImgUrl, setIsImgUrl] = useState(false);
+
+  // const imageElement = useRef(null);
+
   const [isOpenDateRange, setOpenDateRange] = useState(null);
   const [isOpenCalander, setOpenCalander] = useState(false);
 
@@ -21,9 +34,11 @@ const Home: NextPage = () => {
     "currency-dollar-bold.svg",
   ]);
   const [images, setImages]: any = useState(["/stroke-infotech-logo.svg"]);
-  const [signatureImg, setSignatureImg]: any = useState(
+  /* const [signatureImg, setSignatureImg]: any = useState(
     "/stroke-infotech-logo.svg"
-  );
+  ); */
+  const [signatureImg, setSignatureImg]: any = useState(null);
+
   const [getDates, setDates] = useState([
     {
       // startDate: new Date(),
@@ -75,6 +90,32 @@ const Home: NextPage = () => {
 
   const pdfExportComponent = useRef<PDFExport>(null);
   const maxNumber = 69;
+
+  const imageElement: any = useRef(null);
+  let cropper :any;
+  useEffect(() => {
+    console.log("useEffect call");
+    // imageElement = null
+     if (signatureImg) {
+      console.log("useEffect if call");
+      setTimeout(() => {
+        console.log("imageEle", imageElement);
+        console.log("imageEle.current", imageElement.current);
+
+        const cropper = new Cropper(imageElement.current, {
+          zoomable: true,
+          scalable: true,
+          aspectRatio: 13/9,
+          crop: () => {
+            const canvas = cropper.getCroppedCanvas();
+            setImageDestination(canvas.toDataURL("/image/png"));
+          },
+        });
+      }, 500);
+    }  
+  }, [signatureImg]);
+
+  // console.log("signatureIma",signatureImg)
 
   const handleAllValues = (event: any) => {
     const { value, name } = event.target;
@@ -154,10 +195,59 @@ const Home: NextPage = () => {
     const file: any = event[0].data_url;
     setImages(file);
   };
+
+ 
+
   const handleSignature = (event: any) => {
+    setImageDestination(null);
+    console.log("click");
     const file: any = event[0].data_url;
+    // console.log("file", file);
+    // console.log("event", event);
+    const temp = file.split(",", 2);
+    const filebase64 = temp[1];
+    // console.log("filebase64", filebase64);
+    const fileName = event[0].file;
+    const name = fileName.name;
+    setIsImgUrl(true);
     setSignatureImg(file);
+    setSrc(file);
+    // setSrc(filebase64);
+
+    console.log("imageEle", imageElement);
+    console.log("imageEle.current", imageElement.current);
+
+    if (signatureImg) {
+      console.log("function if");
+        console.log("settime out if");
+        console.log("cropper",cropper)
+
+         
+         /* cropper = new Cropper(imageElement.current, {
+            zoomable: true,
+            scalable: true,
+            aspectRatio: 1,
+            crop : (signatureImg) => {
+              console.log("sigma", signatureImg);
+              const canvas = cropper.getCroppedCanvas();
+              // setImageDestination(canvas.toDataURL("data_url"));
+              setImageDestination(canvas.toDataURL("/image/png"));
+              console.log("change funcrion", cropper);
+              setSrc(cropper)
+            },
+          }) */
+          
+     
+    }
   };
+
+  /* const handleCropperCanvas = (e:any) => {
+    console.log("clear click");
+    console.log("e",e)
+   console.log("src",src)
+   setSrc();
+    console.log("cropper", cropper);
+  }; */
 
   const deleteRow = (e: any, index: any) => {
     //soultion -2
@@ -170,18 +260,18 @@ const Home: NextPage = () => {
     setDownloadbtnClick(true);
     console.log("data", data);
     console.log("data", data[0].item_name !== "" || data[0].item_desc !== "");
-   /*  if (data[0].item_name !== "" || data[0].item_desc !== "") {
+    /*  if (data[0].item_name !== "" || data[0].item_desc !== "") {
       console.log("if call"); */
-       setTimeout(() => {
-        if (pdfExportComponent.current) {
-          console.log("pdf save if call");
+    setTimeout(() => {
+      if (pdfExportComponent.current) {
+        console.log("pdf save if call");
 
-          pdfExportComponent.current.save();
-          setTimeout(() => {
-            setDownloadbtnClick(false);
-          }, 5000);
-        }
-      }, 1000); 
+        pdfExportComponent.current.save();
+        setTimeout(() => {
+          setDownloadbtnClick(false);
+        }, 5000);
+      }
+    }, 1000);
     // }
   };
 
@@ -230,10 +320,6 @@ const Home: NextPage = () => {
     }
   };
 
-  const handleMonthandYear = (e) => {
-    console.log("e", e);
-  };
-
   return (
     <>
       <div>
@@ -275,18 +361,19 @@ const Home: NextPage = () => {
               <div className="flex justify-between items-start border-b border-real-gray px-12 pt-14 pb-5">
                 <div className="w-2/4 pt-1">
                   <ImageUploading
-                    value={images}
+                    // value={images}
                     onChange={handleImages}
                     maxNumber={maxNumber}
                     dataURLKey="data_url"
+                    value={[]}
                   >
-                    {({ onImageUpload, isDragging, dragProps }) => (
+                    {({ onImageUpload,onImageUpdate, isDragging, dragProps }) => (
                       <div className="upload__image-wrapper max-w-[45%]">
                         <div className="w-full text-right">
                           <button
                             className="mb-2 edit-button fill-primary"
                             style={isDragging ? { color: "red" } : undefined}
-                            onClick={onImageUpload}
+                            onClick={onImageUpdate}
                             {...dragProps}
                           >
                             <svg
@@ -538,7 +625,7 @@ const Home: NextPage = () => {
                     </label>
 
                     <select
-                      className="currency-selector w-[20%] text-secondary font-bold text-xs h-full border-real-gray"
+                      className="currency-selector w-[auto] text-secondary font-bold text-xs h-full border-real-gray"
                       onChange={handleoptions}
                     >
                       <option
@@ -851,7 +938,11 @@ const Home: NextPage = () => {
                     <tr className="add-item border-b-2 border-real-gray ">
                       <td className="">
                         <button
-                          disabled={data[0].item_name === "" && data[0].item_desc ==="" ? true : false}
+                          disabled={
+                            data[0].item_name === "" && data[0].item_desc === ""
+                              ? true
+                              : false
+                          }
                           className="flex disabled:opacity-75 disabled:cursor-not-allowed add-button items-center capitalize text-secondary font-medium text-xs "
                           onClick={addRow}
                         >
@@ -920,28 +1011,69 @@ const Home: NextPage = () => {
               </div>
 
               <div className="note-section">
+                {/* <div>
+                  <div className="img-container">
+                    <img ref={imageElement} src={signatureImg} alt="Source" />
+                  </div>
+                  <img
+                    className="img-preview"
+                    src={imageDestination}
+                    alt="Destination"
+                  />
+                </div> */}
+
                 <ImageUploading
-                  value={signatureImg}
+                  // value={signatureImg}
                   onChange={handleSignature}
                   maxNumber={maxNumber}
                   dataURLKey="data_url"
+                  value={[]}
                 >
-                  {({ onImageUpload, isDragging, dragProps }) => (
+                  {({ onImageUpload, onImageUpdate, dragProps }) => (
                     <div className="upload__image-wrapper px-12 py-6">
-                      <div className="image-signature max-w-[20%] ml-auto">
-                        <img
-                          src={signatureImg}
-                          className="w-[100px] ml-auto"
-                          alt=""
-                        />
+                      <div className="image-signature max-w-[29%] ml-auto">
+                        {/* <div className="img-container"> */}
+                        {!isdownloadbtnClick ? (
+                          <>
+                            <div>
+                              <div className="img-container">
+                             { signatureImg ?
+                                <img
+                                  ref={imageElement}
+                                  src={signatureImg}
+                                  alt="Source"
+                                  className="w-[100px] ml-auto with-ref"
+                                />
+                                : ""}
+                              
+                              </div>
+                              {imageDestination ? (
+                                <img
+                                  src={imageDestination}
+                                  alt="Destination"
+                                  className="w-[100px] ml-auto"
+                                />
+                              ) : (
+                                ""
+                              )}
+                            </div>
+                          </>
+                        ) : (
+                          <img
+                            src={imageDestination ? imageDestination : ""}
+                            alt="Destination"
+                            className="w-[100px] ml-auto"
+                          />
+                        )}
                       </div>
-                      <div className="w-full text-center max-w-[20%] ml-auto text-right">
+                      <div className="w-full text-center max-w-[20%] ml-auto text-right ">
                         <button
-                          className="my-2 edit-button fill-primary"
-                          style={isDragging ? { color: "red" } : undefined}
-                          onClick={onImageUpload}
+                          className="my-2 edit-button fill-primary inline-flex capitalize text-secondary font-medium text-xs items-center"
+                          // style={isDragging ? { color: "red" } : undefined}
+                          onClick={onImageUpdate}
                           {...dragProps}
                         >
+                          
                           <svg
                             baseProfile="tiny"
                             height="24px"
@@ -956,7 +1088,9 @@ const Home: NextPage = () => {
                           >
                             <path d="M21.561,5.318l-2.879-2.879C18.389,2.146,18.005,2,17.621,2c-0.385,0-0.768,0.146-1.061,0.439L13,6H4C3.448,6,3,6.447,3,7  v13c0,0.553,0.448,1,1,1h13c0.552,0,1-0.447,1-1v-9l3.561-3.561C21.854,7.146,22,6.762,22,6.378S21.854,5.611,21.561,5.318z   M11.5,14.672L9.328,12.5l6.293-6.293l2.172,2.172L11.5,14.672z M8.939,13.333l1.756,1.728L9,15L8.939,13.333z M16,19H5V8h6  l-3.18,3.18c-0.293,0.293-0.478,0.812-0.629,1.289C7.031,12.969,7,13.525,7,13.939V17h3.061c0.414,0,1.108-0.1,1.571-0.29  c0.464-0.19,0.896-0.347,1.188-0.64L16,13V19z M18.5,7.672L16.328,5.5l1.293-1.293l2.171,2.172L18.5,7.672z" />
                           </svg>
+                          Choose File
                         </button>
+                        {/* <button onClick={handleCropperCanvas}>Clear</button> */}
                       </div>
                     </div>
                   )}
@@ -979,7 +1113,11 @@ const Home: NextPage = () => {
           <div className="flex justify-center w-full my-2.5">
             <button
               type="submit"
-              disabled={data[0].item_name === "" && data[0].item_desc === "" ? true : false}
+              disabled={
+                data[0].item_name === "" && data[0].item_desc === ""
+                  ? true
+                  : false
+              }
               onClick={exportPDFWithComponent}
               className="text-center disabled:opacity-75 disabled:cursor-not-allowed border text-center border-slate-100 p-2 mt-15 mb-15 font-medium text-sm bg-button-bg text-button-text"
             >
