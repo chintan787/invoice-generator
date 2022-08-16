@@ -15,7 +15,8 @@ import { format } from "date-fns";
 import "cropperjs/dist/cropper.min.css";
 import { useDropzone } from "react-dropzone"; */
 
-import Cropper from "react-cropper";
+// import Cropper from "react-cropper";
+import Cropper from 'react-cropper';
 import "cropperjs/dist/cropper.css";
 
 const Home: NextPage = () => {
