@@ -208,11 +208,13 @@ kendo-pdf-document .note-section{
   width:100%;
   bottom: 90px;
 }
- .service-description{
-  min-height: 400px;
-}
+  .service-description{
+  min-height: 250px;
+  margin-bottom: 15px;
+} 
 kendo-pdf-document .service-description{
 min-height: auto;
+margin-bottom: 0;
 } 
 
 
@@ -238,4 +240,26 @@ min-height: auto;
 }
 .upload-image input[type="file"]{
 display: none;
+}
+/* .k-editor-content iframe,
+.k-content.ProseMirror{
+  height:auto !important;
+} */
+.k-editor-content iframe{
+  margin-left: auto;
+
+}
+.k-iframe body > .k-content {
+  /* display: block; */
+  text-align: right !important;
+}
+.k-iframe .k-content > p{
+  text-align: right;
+}
+
+.k-content .ProseMirror.ProseMirror-focused{
+cursor: none;
+}
+.pdf-signature-image img{
+  margin-left: auto;
 }
