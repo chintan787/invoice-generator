@@ -1,16 +1,15 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import styles from "../styles/Home.module.css";
-import "react-date-range/dist/styles.css"; // main style file
-import "react-date-range/dist/theme/default.css"; // theme css file
+import "react-date-range/dist/styles.css"; 
+import "react-date-range/dist/theme/default.css"; 
 import { DateRange, Calendar } from "react-date-range";
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { PDFExport } from "@progress/kendo-react-pdf";
-import ImageUploading, { ImageListType } from "react-images-uploading";
+import ImageUploading from "react-images-uploading";
+
 import { format } from "date-fns";
 
-// import Cropper from 'react-cropper';
-// import "cropperjs/dist/cropper.css";
 import {
   Editor,
   EditorTools,
@@ -18,15 +17,11 @@ import {
   ProseMirror,
   EditorMountEvent,
 } from "@progress/kendo-react-editor";
-import content from "../content";
 
-import ReactHtmlParser, {
-  processNodes,
-  convertNodeToElement,
-  htmlparser2,
-} from "react-html-parser";
+import ReactHtmlParser from "react-html-parser";
 
 const Home: NextPage = () => {
+
   const { EditorState, EditorView } = ProseMirror;
   const { imageResizing } = EditorUtils;
 
@@ -35,32 +30,8 @@ const Home: NextPage = () => {
   );
   const [imageWidth, setImageWidth]: any = useState();
   const [logoImgWidth, setLogoImgWidth]: any = useState();
-  // const [signatureImg, setSignatureImg]: any = useState(null);
-
-  /* const onMount = (event: EditorMountEvent) => {
-    const { plugins, doc } = event.viewProps.state;
-  
-      return new EditorView(
-        { mount: event.dom },
-        {
-          ...event.viewProps,
-          state: EditorState.create({
-            doc,
-            plugins: [...plugins, imageResizing()],
-          }),
-        }
-      );
-  }; */
-  /*  const [image, setImage] = useState("/stroke-infotech-logo.svg");
-  const [cropData, setCropData] = useState<any>("");
-  const [cropper, setCropper] = useState<any>("");
- */
-
-  // const imageElement = useRef(null);
-
   const [isOpenDateRange, setOpenDateRange] = useState(null);
   const [isOpenCalander, setOpenCalander] = useState(false);
-
   const [invoiceDate, setInvoiceDate]: any = useState(null);
   const [isdownloadbtnClick, setDownloadbtnClick] = useState(false);
   const [currencyType, setCurrencyType] = useState([
@@ -68,7 +39,6 @@ const Home: NextPage = () => {
     "currency-dollar-bold.svg",
   ]);
   const [images, setImages]: any = useState(["/stroke-infotech-logo.svg"]);
-
   const [getDates, setDates] = useState([
     {
       startDate: null,
@@ -119,6 +89,7 @@ const Home: NextPage = () => {
   const pdfExportComponent = useRef<PDFExport>(null);
   const maxNumber = 69;
 
+
   const handleAllValues = (event: any) => {
     const { value, name } = event.target;
     setUpdateValue({ ...defaultVal, [name]: value });
@@ -145,8 +116,6 @@ const Home: NextPage = () => {
 
   const handleTableRow = (event: any, row: any, index: any) => {
     if (event.selection) {
-      console.log("event", event.selection);
-
       const updatedData = [...data];
       const item: any = { ...updatedData[index] };
       const start = format(event.selection.startDate, "dd/MM/yyyy");
@@ -162,7 +131,6 @@ const Home: NextPage = () => {
       dataitem["startDate"] = event.selection.startDate;
       dataitem["endDate"] = event.selection.endDate;
       newDateData[index] = dataitem;
-
       setDates(newDateData);
       setOpenDateRange(null);
     } else {
@@ -212,7 +180,6 @@ const Home: NextPage = () => {
     }
   };
 
- 
   const handleSignature = (e: any) => {
     if (e.viewProps) {
       const { plugins, doc } = e.viewProps.state;
@@ -228,8 +195,6 @@ const Home: NextPage = () => {
         }
       );
     } else {
-      console.log("call function");
-      console.log("event", e);
       const file: any = e[0].data_url;
       setSignatureImg(file);
     }
@@ -244,23 +209,16 @@ const Home: NextPage = () => {
 
   const exportPDFWithComponent = () => {
     setDownloadbtnClick(true);
-    console.log("data", data);
-    console.log("data", data[0].item_name !== "" || data[0].item_desc !== "");
-    /*  if (data[0].item_name !== "" || data[0].item_desc !== "") {
-      console.log("if call"); */
     setTimeout(() => {
       if (pdfExportComponent.current) {
-        console.log("pdf save if call");
-
-        pdfExportComponent.current.save();
         
-
+        pdfExportComponent.current.save();
         setTimeout(() => {
           setDownloadbtnClick(false);
         }, 500);
       }
     }, 1000);
-    // }
+    
   };
 
   // calculate total
@@ -271,7 +229,6 @@ const Home: NextPage = () => {
 
   //file name
   const temp = "invoice";
-  const clientName = defaultVal.client_name.split(" ").join("-");
   const fileName =
     defaultVal.invoice_number +
     "-" +
@@ -309,8 +266,8 @@ const Home: NextPage = () => {
     }
   };
 
-  const signatureContent = `<p style="text-align: right; margin-bottom:0;"><img src=${signatureImg} alt="" width="100%" height="auto" /></p>`;
-  const logoContent = `<p style="text-align: left; margin-bottom:0;"><img src=${images} alt="" width="100%" height="auto" /></p>`;
+  const signatureContent = `<p style="text-align: right; margin-bottom:0;"><img src=${signatureImg} alt="" width="100%" height="100%" /></p>`;
+  const logoContent = `<p style="text-align: left; margin-bottom:0;"><img src=${images} alt="" width="100%" height="100%" /></p>`;
   const handleSignatureDimension = (e: any) => {
     setImageWidth(e.html);
   };
@@ -318,7 +275,6 @@ const Home: NextPage = () => {
   const handleLogoDimension = (e: any) => {
     setLogoImgWidth(e.html);
   };
- 
 
   return (
     <>
@@ -356,14 +312,20 @@ const Home: NextPage = () => {
             ref={pdfExportComponent}
             fileName={fileName}
           >
-            {/* min-h-[297mm] */}
-            <div className="page-section max-w-[210mm]  mx-auto shadow-card mb-2 bg-page " style={{minHeight:isdownloadbtnClick ? "297mm" : "285mm" }}>
+           
+            <div
+              className="page-section max-w-[210mm] min-h-[297mm] mx-auto shadow-card mb-2 bg-page"
+              // style={{ minHeight: isdownloadbtnClick ? "297mm" : "297mm" }}
+            >
               <div className="flex justify-between items-start border-b border-real-gray px-12 pt-14 pb-5">
                 <div className="w-2/4 pt-1">
-                <div className="pdf-logo-image max-w-[60%]">
                  
-                  
-                    {isdownloadbtnClick ? logoImgWidth !== undefined ? ReactHtmlParser(logoImgWidth) : ReactHtmlParser(logoContent) : ""}
+                  <div className="pdf-logo-image max-w-[60%]">
+                    {
+                     logoImgWidth !== undefined
+                        ? ReactHtmlParser(logoImgWidth)
+                        : ReactHtmlParser(logoContent)
+                     }
                   </div>
                   <ImageUploading
                     // value={images}
@@ -402,12 +364,11 @@ const Home: NextPage = () => {
                             </svg>
                           </button>
                         </div>
-                        {/* <div className="image-item">
-                          <img src={images} alt="" />
-                        </div> */}
+                        
                         <div className="image-item w-full ">
+                          {/* {isdownloadbtnClick ? "" : */}
                           <Editor
-                            className="w-full "
+                            className="w-full image-editor"
                             onMount={handleSignature}
                             value={logoContent}
                             contentStyle={{
@@ -421,7 +382,6 @@ const Home: NextPage = () => {
                       </div>
                     )}
                   </ImageUploading>
-                  
                 </div>
                 <div className="w-2/4  company-details ">
                   <input
@@ -809,7 +769,6 @@ const Home: NextPage = () => {
                                     )
                                   ) : (
                                     <textarea
-                                      // type="text"
                                       rows={1}
                                       name="item_name"
                                       placeholder="Enter Item title"
@@ -1034,7 +993,7 @@ const Home: NextPage = () => {
                 </table>
               </div>
 
-              <div className="note-section px-12">
+              <div className="note-section px-12 ">
                 <ImageUploading
                   // value={images}
                   onChange={handleSignature}
@@ -1074,14 +1033,14 @@ const Home: NextPage = () => {
                       </div>
                       <div className="image-item ">
                         <Editor
-                          className="w-full text-right"
+                          className="w-full text-right image-editor"
                           onMount={handleSignature}
                           value={signatureContent}
                           contentStyle={{
                             overflow: "hidden",
-                            height:"100%",
+                            height: "100%",
                             width: "100%",
-                            padding:0,
+                            padding: 0,
                           }}
                           onChange={handleSignatureDimension}
                         />
@@ -1089,12 +1048,14 @@ const Home: NextPage = () => {
                     </div>
                   )}
                 </ImageUploading>
-                <div className="pdf-signature-image ml-auto max-w-[40%]">
+               
 
-                  {isdownloadbtnClick ? imageWidth !== undefined ? ReactHtmlParser(imageWidth) : ReactHtmlParser(signatureContent) : ""}
+                <div className="pdf-signature-image ml-auto max-w-[40%]">
+                  {imageWidth !== undefined
+                    ? ReactHtmlParser(imageWidth)
+                    : ReactHtmlParser(signatureContent)}
                 </div>
 
-                
                 <div className="w-full py-4 mt-6">
                   <textarea
                     rows={1}

@@ -22,16 +22,12 @@
     "@progress/kendo-react-progressbars": "^5.5.0",
     "@progress/kendo-react-treeview": "^5.5.0",
     "autoprefixer": "^10.4.7",
-    "cropperjs": "^1.5.12",
     "date-fns": "^2.29.1",
-    "html-parse-stringify": "^3.0.1",
     "next": "12.2.3",
     "react": "18.2.0",
-    "react-cropper": "^2.1.8",
     "react-date-range": "^1.4.0",
     "react-dom": "18.2.0",
     "react-html-parser": "^2.0.2",
-    "react-image-crop": "^10.0.6",
     "react-images-uploading": "^3.1.7"
   },
   "devDependencies": {

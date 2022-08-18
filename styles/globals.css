@@ -15,9 +15,7 @@ html {
   font-family: 'Inter', sans-serif;
 }
 
-#curencySymbols {
-  font-family: "CODE2000";
-}
+
 
 
 kendo-pdf-document .edit-button,
@@ -53,8 +51,6 @@ kendo-pdf-document .company-details textarea {
   justify-content: right;
   display: flex;
   margin-left: auto;
-
-
 }
 
 table {
@@ -63,7 +59,6 @@ table {
 
 kendo-pdf-document tr, kendo-pdf-document tr td,
 kendo-pdf-document tr th {
-
   page-break-inside: avoid !important;
 }
 
@@ -71,7 +66,6 @@ table tr, table tr th,
 table tr d {
   page-break-inside: avoid !important;
 }
-
 
 kendo-pdf-document .address {
   margin-right: -12px;
@@ -81,12 +75,10 @@ kendo-pdf-document .mobile-number {
   margin-left: 8px;
 }
 
-
 .signatureCanvas {
   border: 1px solid;
   margin: 0 auto;
 }
-
 
 .rmdp-container input {
   font-size: 12px;
@@ -107,7 +99,6 @@ input:focus,
 textarea:focus {
   outline-style: solid;
   outline-color: #d8dadb;
-
 }
 
 select:focus {
@@ -120,11 +111,7 @@ input,
 textarea {
   padding: 4px 4px;
 }
-/* textarea.item_name,
-textarea.item_desc{
-  padding:8px;
-}
- */
+
 kendo-pdf-document input,
 kendo-pdf-document textarea {
   padding: 0;
@@ -142,8 +129,6 @@ kendo-pdf-document input.sum{
   padding:0;
 }
 
-
-
 #invoice-details tr td input {
   padding: 4px 4px;
 }
@@ -159,8 +144,6 @@ kendo-pdf-document #invoice-details tr td input {
 kendo-pdf-document .client_name {
   margin-bottom: 0;
 }
-
-
 
 kendo-pdf-document .calender-icon {
   display: none;
@@ -194,12 +177,7 @@ kendo-pdf-document #mytbody tr:first-child td {
   padding-top: 10px;
 }
 
-/* kendo-pdf-document .note-section,
-kendo-pdf-document .note-section textarea{
-  flex-grow: 1;
-  margin-bottom: 0;
-  padding-bottom: 0;
-} */
+
 kendo-pdf-document .page-section{
 position: relative;
 }
@@ -209,30 +187,16 @@ kendo-pdf-document .note-section{
   bottom: 90px;
 }
   .service-description{
-  min-height: 250px;
-  margin-bottom: 15px;
+  min-height: auto;
+  margin-bottom: 20px;
 } 
 kendo-pdf-document .service-description{
 min-height: auto;
 margin-bottom: 0;
 } 
 
-
-.img-container {
-  /* width: 640; */
-  /* height: 480; */
-  /* float: left; */
-}
-
-.img-preview {
-  /* width: 200px; */
-  /* height: 200px; */
-  /* float: left; */
-  /* margin-left: 10px; */
-} 
 .box {
   display: inline-block;
-  /* padding: 10px; */
   box-sizing: border-box;
 }
 .img-preview {
@@ -241,16 +205,13 @@ margin-bottom: 0;
 .upload-image input[type="file"]{
 display: none;
 }
-/* .k-editor-content iframe,
-.k-content.ProseMirror{
-  height:auto !important;
-} */
+
 .k-editor-content iframe{
   margin-left: auto;
 
 }
 .k-iframe body > .k-content {
-  /* display: block; */
+ 
   text-align: right !important;
 }
 .k-iframe .k-content > p{
@@ -262,4 +223,17 @@ cursor: none;
 }
 .pdf-signature-image img{
   margin-left: auto;
+  display:none
+}
+kendo-pdf-document .pdf-signature-image img{
+  display: block;
+}
+.pdf-logo-image img{
+  display:none;
+}
+kendo-pdf-document .pdf-logo-image img{
+  display:block;
+}
+kendo-pdf-document .image-editor{
+  display: none;
 }
