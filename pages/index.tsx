@@ -994,7 +994,6 @@ const Home: NextPage = () => {
                 </table>
               </div>
               
-
               <div className="index-section note-section sm:px-5 lg:px-12 ">
                 <ImageUploading
                   // value={images}
