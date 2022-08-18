@@ -237,3 +237,14 @@ kendo-pdf-document .pdf-logo-image img{
 kendo-pdf-document .image-editor{
   display: none;
 }
+
+
+/* responsive */
+ @media only screen and (max-width: 450px) {
+  .delete-button {
+    right:0
+  }
+  .calender-icon{
+    display: none;
+  }
+}
