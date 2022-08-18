@@ -314,10 +314,10 @@ const Home: NextPage = () => {
           >
            
             <div
-              className="page-section max-w-[210mm] min-h-[297mm] mx-auto shadow-card mb-2 bg-page"
+              className="page-section sm:max-w[1200px] lg:max-w-[210mm] min-h-[297mm] lg:mx-auto shadow-card mb-2 bg-page"
               // style={{ minHeight: isdownloadbtnClick ? "297mm" : "297mm" }}
             >
-              <div className="flex justify-between items-start border-b border-real-gray px-12 pt-14 pb-5">
+              <div className="index-section flex justify-between items-start border-b border-real-gray sm:px-5 lg:px-12 pt-14 pb-5">
                 <div className="w-2/4 pt-1">
                  
                   <div className="pdf-logo-image max-w-[60%]">
@@ -420,7 +420,7 @@ const Home: NextPage = () => {
               </div>
 
               {/* second section */}
-              <div className="flex justify-between items-start px-12 py-5 ">
+              <div className="index-section flex justify-between items-start sm:px-5 lg:px-12 py-5 ">
                 <div className="w-2/4">
                   <input
                     type="text"
@@ -536,7 +536,7 @@ const Home: NextPage = () => {
                                   ? format(invoiceDate, "dd/MM/yyyy")
                                   : ""
                               }
-                              className="relative leading-[21px] max-w-[65%] hover:bg-input-hover text-secondary font-medium text-xs "
+                              className="invoice_date relative leading-[21px] max-w-[65%] hover:bg-input-hover text-secondary font-medium text-xs "
                               onChange={handleAllValues}
                               onClick={openCalander}
                             />
@@ -587,7 +587,7 @@ const Home: NextPage = () => {
                               type="text"
                               name="invoice_pament_due"
                               value={defaultVal.invoice_pament_due}
-                              className="max-w-[65%] leading-[21px] hover:bg-input-hover text-secondary font-medium text-xs"
+                              className="invoice_pament_due max-w-[65%] leading-[21px] hover:bg-input-hover text-secondary font-medium text-xs"
                               onChange={handleAllValues}
                             />
                           </td>
@@ -598,18 +598,19 @@ const Home: NextPage = () => {
                 </div>
               </div>
 
+
               {/* third section */}
               {isdownloadbtnClick ? (
                 ""
               ) : (
-                <div className="flex py-2 px-12 justify-end">
-                  <form action="/action_page.php" className="w-[22%]">
+                <div className="flex py-2 sm:px-5 lg:px-12 justify-end text-right ">
+                  <form  className="w-full ">
                     <label className="text-secondary font-bold text-xs pr-1">
                       Select currency:
                     </label>
 
                     <select
-                      className="currency-selector w-[auto] text-secondary font-bold text-xs h-full border-real-gray"
+                      className="currency-selector mr-0.5 w-[auto] text-secondary font-bold text-xs h-full border-real-gray"
                       onChange={handleoptions}
                     >
                       <option
@@ -648,7 +649,7 @@ const Home: NextPage = () => {
                 </div>
               )}
               {/* min-h-[450px] */}
-              <div className="px-12 service-description">
+              <div className="index-section sm:px-8 lg:px-12 service-description">
                 <table className="table-fixed w-full text-left" id="mythead">
                   <thead className="border-y border-real-gray">
                     <tr>
@@ -899,7 +900,7 @@ const Home: NextPage = () => {
                                     </>
                                   )}
                                   <button
-                                    className="flex delete-button block absolute right-[-20px] top-[7px]"
+                                    className="flex delete-button block absolute right-[-20px]  top-[7px]"
                                     onClick={(e) => {
                                       deleteRow(e, index);
                                     }}
@@ -992,8 +993,9 @@ const Home: NextPage = () => {
                   </tbody>
                 </table>
               </div>
+              
 
-              <div className="note-section px-12 ">
+              <div className="index-section note-section sm:px-5 lg:px-12 ">
                 <ImageUploading
                   // value={images}
                   onChange={handleSignature}

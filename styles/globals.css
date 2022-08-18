@@ -237,3 +237,61 @@ kendo-pdf-document .pdf-logo-image img{
 kendo-pdf-document .image-editor{
   display: none;
 }
+
+
+/* responsive */
+ @media only screen and (max-width: 450px) {
+  .delete-button {
+    right:0
+  }
+  .calender-icon{
+    display: none;
+  }
+  
+}
+@media only screen and (max-width: 1024px) {
+  .calender-icon{
+    /* display: none; */
+    right: 10px;
+  }
+#invoice-details{
+  width: 100%;
+}
+#invoice-details input{
+  width:100%;
+}
+#invoice-details span{
+  /* width:100%; */
+  max-width:98%
+}
+
+#invoice-details .invoice_pament_due,.invoice_date{
+max-width: 98%;
+}
+
+
+
+
+kendo-pdf-document #invoice-details{
+  width: auto;
+}
+kendo-pdf-document #invoice-details input{
+  width:auto;
+}
+kendo-pdf-document #invoice-details span{
+  /* width:100%; */
+  max-width:65%
+}
+
+kendo-pdf-document #invoice-details .invoice_pament_due,kendo-pdf-document .invoice_date{
+max-width: 65%;
+}
+kendo-pdf-document .index-section{
+  padding:40px
+}
+kendo-pdf-document .note-section{
+  
+  width:90%;
+  bottom: 90px;
+}
+} 
