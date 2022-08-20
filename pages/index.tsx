@@ -17,6 +17,7 @@ import {
   ProseMirror,
   EditorMountEvent,
 } from "@progress/kendo-react-editor";
+
 import ReactHtmlParser from "react-html-parser";
 
 const Home: NextPage = () => {
